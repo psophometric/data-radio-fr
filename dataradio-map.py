@@ -116,4 +116,4 @@ for key, data in d_support_unique.items():
     folium.Marker([conversion(l_coord_dms_LAT), conversion(l_coord_dms_LON)],\
     popup=popup).add_to(marker_cluster)
 
-map_osm.save("RadioMap_"+techno+".html")
+map_osm.save("dataradioMap_"+techno+".html")
