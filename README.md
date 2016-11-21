@@ -29,6 +29,9 @@ mkdir data-radio-fr/
 python dataradio-up.py
 ```
 
+## Installation (Windows)
+[Voir le Readme dédié](https://github.com/psophometric/data-radio-fr/blob/master/README-win10.md)
+
 ## Usage
 `python dataradio-up.py`
 Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
