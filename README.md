@@ -25,7 +25,7 @@ Récupérer le dépôt <br>
 `git clone https://github.com/psophometric/data-radio-fr.git`<p>
 Initialisation de la base
 ```
-mkdir data-radio-fr/
+cd data-radio-fr/
 python dataradio-up.py
 ```
 
