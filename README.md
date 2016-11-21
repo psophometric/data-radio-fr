@@ -36,7 +36,7 @@ Vérifie que la version du jeu de données dans le répertoire est bien à jour.
 `python dataradio-tri.py -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<p>
 `python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
 `python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <p>
-> La carte se trouve dans le répertoire data-radio-fr/ au format html à ouvir dans un naviateur web
+> La carte se trouve dans le répertoire data-radio-fr/ au format html à ouvrir dans un naviateur web <p>
 
 Liste exhaustive des technologies utilisables avec `data-radio-map` :
 'BLR 3 GHz', 'COM MAR', 'COM MAR/COM TER', 'COM TER', 'DME', 'EM', 'EM/REC',
