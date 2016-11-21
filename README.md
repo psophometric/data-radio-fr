@@ -14,7 +14,7 @@ Produit un fichier *html* permettant l'affichage sur une carte OpenStreetMap des
 - [Folium](https://github.com/python-visualization/folium)
 
 ## Installation (Linux Debian / Ubuntu)
-Pré-requis (Pip, Git)<br>
+Pré-requis (Pip, Git)
 ```
 sudo apt-get install python-pip
 sudo apt-get install git
@@ -23,7 +23,7 @@ Dépendance<br>
 `pip install folium`<p>
 Récupérer le dépôt <br>
 `git clone https://github.com/psophometric/data-radio-fr.git`<p>
-Initialisation de la base<br>
+Initialisation de la base
 ```
 mkdir data-radio-fr/
 python dataradio-up.py
@@ -35,7 +35,8 @@ Vérifie que la version du jeu de données dans le répertoire est bien à jour.
 `python dataradio-tri.py -d 500` Affiche les stations ayant une date EnService antérieure de 500 jours à la date d'Implantation. *Affiche également si des données sont manquantes ou avec des erreurs de mise en forme*<br>
 `python dataradio-tri.py -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<p>
 `python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
-`python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <br>
+`python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <p>
+> La carte se trouve dans le répertoire data-radio-fr/ au format html à ouvir dans un naviateur web
 
 Liste exhaustive des technologies utilisables avec `data-radio-map` :
 'BLR 3 GHz', 'COM MAR', 'COM MAR/COM TER', 'COM TER', 'DME', 'EM', 'EM/REC',
@@ -46,5 +47,5 @@ Liste exhaustive des technologies utilisables avec `data-radio-map` :
 'RDR COT', 'RDR MTO', 'RDR PFL', 'REC', 'REC/GONIO', 'RMU-POCSAG', 'RS',
 'RS/TELEM', 'SAT', 'SAT GEO', 'SAT NGEO', 'TELECD', 'TELECD/TELEM', 'TELEM',
 'TELEM/TELECD', 'TETRA', 'TETRAPOL',
-'UMTS 2100', 'UMTS 2100/UMTS 900', 'UMTS 900', 'VOR-C'<br>
+'UMTS 2100', 'UMTS 2100/UMTS 900', 'UMTS 900', 'VOR-C'<p>
 Liste des raccourcis : 'GSMR'->'GSM R' 'POCSAG'->'RMU-POCSAG'
