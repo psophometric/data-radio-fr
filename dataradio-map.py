@@ -61,7 +61,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('type', action='store',
                     help="Technologie de l'emetteur", type=str)
 parser.add_argument('-c', action='store_true', dest='cluster',
-                    help='Fonction altitude')
+                    help='Affichage Cluster')
 results = parser.parse_args()
 if results.type == "GSMR":      # Raccourci GSMR
     techno = "GSM R"
