@@ -10,16 +10,32 @@ Recherche d'incohérences des données sur les dates (format et écarts Implatan
 - **dataradio-map**
 Produit un fichier *html* permettant l'affichage sur une carte OpenStreetMap des émetteurs d'une technologie.
 
-## Dépendances
+## Dépendance
 - [Folium](https://github.com/python-visualization/folium)
 
+## Installation (Linux Debian / Ubuntu)
+Pré-requis (Pip, Git)<br>
+```
+sudo apt-get install python-pip
+sudo apt-get install git
+```
+Dépendance<br>
+`pip install folium`<p>
+Récupérer le dépôt <br>
+`git clone https://github.com/psophometric/data-radio-fr.git`<p>
+Initialisation de la base<br>
+```
+mkdir data-radio-fr/
+python dataradio-up.py
+```
+
 ## Usage
-`dataradio-up`
-Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<br><br>
-`dataradio-tri -d 500` Affiche les stations ayant une date EnService antérieure de 500 jours à la date d'Implantation. *Affiche également si des données sont manquantes ou avec des erreurs de mise en forme*<br>
-`dataradio-tri -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<br><br>
-`dataradio-map GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
-`dataradio-map GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <br>
+`python dataradio-up.py`
+Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
+`python dataradio-tri.py -d 500` Affiche les stations ayant une date EnService antérieure de 500 jours à la date d'Implantation. *Affiche également si des données sont manquantes ou avec des erreurs de mise en forme*<br>
+`python dataradio-tri.py -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<p>
+`python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
+`python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <br>
 
 Liste exhaustive des technologies utilisables avec `data-radio-map` :
 'BLR 3 GHz', 'COM MAR', 'COM MAR/COM TER', 'COM TER', 'DME', 'EM', 'EM/REC',
