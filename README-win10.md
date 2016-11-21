@@ -1,4 +1,4 @@
-# Pour les utilisateurs de Windows 10
+# Pour les utilisateurs de Windows
 
 ## Installation de Python
 Allez sur la page [Download Python 2.7.12](https://www.python.org/downloads/release/python-2712/).<br>
@@ -16,13 +16,13 @@ Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de 
 
 ## Installation de la dépendance Folium
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).<br>
-`C:\Users\Nom_d_Utilisateur>pip install folium`<p>
+`pip install folium`<p>
 
 ## Initialisation de la base
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).
 ```
-C:\Users\psopho>cd data-radio-fr
-C:\Users\psopho\data-radio-fr>python dataradio-up.py
+cd data-radio-fr
+python dataradio-up.py
 ```
 Cela provoque un message d'erreur. Plus d'information sur [cette page](https://www.python.org/dev/peps/pep-0476/).<br>
 Pour cette raison, il est nécessaire d'ajouter au fichier `dataradio-up.py` (clic droit sur le fichier / Edit with IDLE) les lignes suivantes juste après les lignes *import* existantes :
@@ -37,7 +37,7 @@ urllib.urlopen("https://www.data.gouv.fr/fr/datasets/donnees-sur-les-installatio
 ## Usage
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).<br>
 Se rendre dans le répertoire du programme :<br>
-`C:\Users\psopho>cd data-radio-fr`<br>
+`cd data-radio-fr`<br>
 Puis :<br>
 `python dataradio-up.py`
 Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
