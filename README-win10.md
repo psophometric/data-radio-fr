@@ -12,7 +12,7 @@ Allez sur la page [git-for-windows.github.io/](https://git-for-windows.github.io
 Cliquez sur *Download*<br>
 Lancez le fichier téléchargé et laissez les choix par défaut.<p>
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).<br>
-`C:\Users\psopho>git clone https://github.com/psophometric/data-radio-fr.git`<p>
+`git clone https://github.com/psophometric/data-radio-fr.git`<p>
 
 ## Installation de la dépendance Folium
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).<br>
@@ -33,6 +33,7 @@ import ssl
 context = ssl._create_unverified_context()
 urllib.urlopen("https://www.data.gouv.fr/fr/datasets/donnees-sur-les-installations-radioelectriques-de-plus-de-5-watts-1/", context=context)
 ```
+> Le fichier se trouve dans le répertoire : C:\Users\Nom_Utilisateur\data-radio-fr
 
 ## Usage
 Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de commandes).<br>
@@ -47,7 +48,7 @@ Vérifie que la version du jeu de données dans le répertoire est bien à jour.
 
 `python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
 `python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <p>
-> La carte se trouve dans le répertoire data-radio-fr/ au format html à ouvrir dans un naviateur web 
+> La carte se trouve dans le répertoire C:\Users\Nom_Utilisateur\data-radio-fr au format html à ouvrir dans un naviateur web 
 
 Liste exhaustive des technologies utilisables avec `data-radio-map` :
 'BLR 3 GHz', 'COM MAR', 'COM MAR/COM TER', 'COM TER', 'DME', 'EM', 'EM/REC',
