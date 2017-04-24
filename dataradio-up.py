@@ -9,7 +9,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 dir_zip = "/zip/"
 dir_csv = "/csv/"
 anfr_data = "https://www.data.gouv.fr/fr/datasets/donnees-sur-les-installations-radioelectriques-de-plus-de-5-watts-1/"
-insee_link = "http://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/download/?format=csv&timezone=Europe/Paris&use_labels_for_header=true"
+insee_link = "https://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/download/?format=csv&timezone=Europe/Paris&use_labels_for_header=true"
 insee_file = "code-insee.csv"
 
 def verifier_site(anfr_data):
@@ -18,9 +18,9 @@ def verifier_site(anfr_data):
     ainsi que son URL"""
     page=urllib.urlopen(anfr_data)
     strpage=page.read()
-    redatalink = r'https://.+DATA.zip'
+    redatalink = r'https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\DATA.zip'
     redatafile = r'[0-9]+_DATA.zip'
-    rereflink = r'https://.+reference.zip'
+    rereflink = r'https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\_Tables_de_reference.zip'
     rereffile = r'[0-9]+_Tables_de_reference.zip'
     datalinkre = re.compile(redatalink,re.IGNORECASE)
     datalink = datalinkre.findall(strpage)
@@ -31,6 +31,7 @@ def verifier_site(anfr_data):
     refzipre = re.compile(rereffile,re.IGNORECASE)
     refzip = refzipre.findall(strpage)
     print "Fichier disponible sur internet :", datazip[0]
+    print "Fichier disponible sur internet :", refzip[0]
     return datalink[0], datazip[0], reflink[0], refzip[0]
 
 def verifier_date(local_name, data_link, data_file, ref_link, ref_file):
