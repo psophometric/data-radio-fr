@@ -111,7 +111,7 @@ for key, data in d_support_unique.items():
     + "<br>Antennes : " + str(liste_emetteur.count(key)) \
     + "<br>Support : " + data[0] + "<br>" + latnature \
     + " (" + str(data[11]) + "m)<br>" +  latproprio
-    iframe = folium.element.IFrame(html=html, width=275, height=175)
+    iframe = folium.IFrame(html=html, width=275, height=175)
     popup = folium.Popup(iframe, max_width=2650)
     folium.Marker([conversion(l_coord_dms_LAT), conversion(l_coord_dms_LON)],\
     popup=popup).add_to(marker_cluster)
