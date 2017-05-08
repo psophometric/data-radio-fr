@@ -1,60 +1,133 @@
 # -*- coding: utf-8 -*-
-import csv
-import argparse
+from __future__ import unicode_literals #str utf-8
 import folium
+import json
+import argparse
 
-def chargement_fichier(chemin,i):
-    """Ouvre et enregistre le fichier dans un dictionnaire.
-    Suppression de la première ligne (labels)
-    Key : le champs i
-    Data : ensemble des champs"""
-    fichier = open(chemin, "rb")
-    liste = list(csv.reader(fichier,delimiter=";"))
-    liste.pop(0) #suppression 1ere ligne
-    fichier.close()
+class Support(object):
+    def __init__(self, support):
+        self.id = support['id']
+        #self.nature_id = support['nature_id']
+        self.nature = support['nature']
+        self.code_postal = support['code_postal']
+        self.ville = support['ville']
+        self.departement = support['departement']
+        self.lat = support['lat']
+        self.lon = support['lon']
+        self.hauteur = support['hauteur']
+        #self.proprio_id = support['proprietaire_id']
+        self.proprietaire = support['proprietaire']
+        self.antennes = []
+    def get_systeme(self):
+        liste = []
+        for antenne in self.antennes:
+            for station in antenne.stations:
+                for emetteur in station.emetteurs:
+                    liste.append(emetteur.systeme)
+        return set(liste)
+    def print_support(self):
+        data_str = '{0} {1} ({2})\n'.format(self.id,self.proprietaire,self.departement)
+        data_str += "{0} ({1}m)\n".format(self.nature, self.hauteur)
+        liste = sorted(self.antennes, key=lambda x: float(x.altitude.replace(',', '.')), reverse=True)
+        for antenne in liste:
+            ant = [antenne.altitude, antenne.azimut]
+            tec = ""
+            compteur = 0
+            for station in antenne.stations :
+                exp = station.exploitant
+                for emetteur in station.emetteurs:
+                    tec += ' ' + emetteur.systeme
+                if compteur == 0 :
+                    data_str += '{0:5}m ({1:5}°) - {2:20} -{3}\n'.format(ant[0], ant[1], exp, tec)
+                else :
+                    data_str += '|____________>> - {0:20} -{1:3}\n'.format(exp, tec)
+                compteur += 1
+        return data_str
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+            sort_keys=True, indent=4)
+
+class Antenne(object):
+    def __init__(self, antenne):
+        #self.id = antenne['id']
+        #self.type_id antenne['type_id']
+        self.type = antenne['type']
+        self.dimension, self.rayon = antenne['dimension'], antenne['rayon']
+        self.azimut, self.altitude = antenne['azimut'], antenne['altitude']
+        self.stations = []
+    def get_exploitants(self):
+        liste = []
+        for station in antenne.stations:
+            liste.append(station.exploitant_id)
+        return set(liste)
+    def get_systeme(self):
+        liste = []
+        for station in antenne.stations:
+            for emetteur in station.emetteurs:
+                for sys in emetteur.systeme:
+                    liste.append(sys)
+        return set(liste)
+
+
+class Station(object):
+    def __init__(self, station):
+        self.id = station['id']
+    #    self.exploitant_id = station['exploitant_id']
+        self.exploitant = station['exploitant']
+        self.dateImplan = station['dateImplan']
+        self.dateModif = station['dateModif']
+        self.dateService = station['dateService']
+        self.emetteurs = []
+
+class Emetteur():
+    def __init__(self, emetteur):
+        #self.id = emetteur[0]
+        self.systeme=emetteur['systeme']
+        self.bandes = []
+
+class Bande():
+    def __init__(self, bande):
+        self.debut = bande['debut']
+        self.fin = bande['fin']
+        self.unite = bande['unite']
+###############################################################################
+def lecture_json(fichier):
+    with open(fichier, 'r') as f:
+        data = json.load(f)
     dictionnaire = {}
-    for definitions in liste :
-        key_dico = definitions[i]   # n°STATION
-        data_dico = definitions[0:] # Toutes les colonnes
-        dictionnaire[key_dico] = data_dico
+    for support in data['supports']:
+        o_sup = Support(support)
+        for antenne in support['antennes']:
+            o_ant = Antenne(antenne)
+            o_sup.antennes.append(o_ant)
+            for station in antenne['stations']:
+                o_sta = Station(station)
+                o_ant.stations.append(o_sta)
+                for emetteur in station['emetteurs']:
+                    o_eme = Emetteur(emetteur)
+                    o_sta.emetteurs.append(o_eme)
+                    for bande in emetteur['bandes']:
+                        o_ban = Bande(bande)
+                        o_eme.bandes.append(o_ban)
+        dictionnaire[o_sup.id]=o_sup
     return dictionnaire
 
-def conversion(coord_DMS) :
-    """Converti les coordonnées DMS en DD"""
-    if coord_DMS[3] == "N" or coord_DMS[3] == "E":
-        coord_DD = coord_DMS[0] + (coord_DMS[1] * 1/60) + (coord_DMS[2] * 1/3600)
-    if coord_DMS[3] == "S" or coord_DMS[3] == "W":
-        coord_DD = (coord_DMS[0] + (coord_DMS[1] * 1/60) + (coord_DMS[2] * 1/3600)
-                   )*(-1)
-    return coord_DD
+def liste_supports_systeme(dictionnaire, systeme):
+    liste_supports_systeme = []
+    for support in dictionnaire.values():
+        if systeme in support.get_systeme():
+            liste_supports_systeme.append(support.id)
+    return liste_supports_systeme
 
-def liste_unique(chemin,techno):
-    """Extrait les émetteurs et retourne une liste unique des stations
-    appartenant à la techno spécifiée"""
-    fichier = open(chemin, "rb")
-    liste = list(csv.reader(fichier,delimiter=";"))
-    liste.pop(0) #suppression 1ere ligne
-    fichier.close()
-    liste_emetteur = []
-    liste_unique = []
-    for ligne in liste :
-        if ligne[1] == techno:
-            liste_emetteur.append(ligne[2])
-    #liste sans doublons :
-    liste_unique = list(set(liste_emetteur))
-    return liste_unique, liste_emetteur
-
-def mix_support_insee(d_insee,dico_support):
-    """Ajoute des DATA Nom commune et n°département du dictionnaire insee
-    au dictionnaire Support selon le code insee indiqué dans le champs 18
-    des DATA du Support"""
-    for key, support in dico_support.items() :
-        commune = d_insee.get(support[18]) # code insee
-        if commune == None:
-            commune = ["","",""]
-        support.append(commune[2])         # nom commune
-        support.append(commune[1])         # département
-    return dico_support
+def affichage_support(liste, couleur):
+    for support in liste:
+        data_sup = dictionnaire[support].print_support().replace('\n','<br>')
+        geo=(dictionnaire[support].lat,dictionnaire[support].lon)
+        html=folium.IFrame(html=data_sup,width=700, height=300)
+        popup = folium.Popup(html, max_width=800)
+        folium.Marker(geo,\
+        popup=popup, icon = folium.Icon(color=couleur)).add_to(marker_cluster)
+    return True
 
 ############################### PARSER #########################################
 parser = argparse.ArgumentParser()
@@ -69,51 +142,17 @@ elif results.type == "POCSAG":  # Raccourci POCSAG
     techno = "RMU-POCSAG"
 else:
     techno = results.type
+###############################################################################
+dictionnaire = lecture_json('json/dataradio.json')
 
-################### Chargement des fichiers ####################################
-liste_unique, liste_emetteur = liste_unique("csv/SUP_EMETTEUR.txt",techno)
-d_station=chargement_fichier("csv/SUP_STATION.txt", 0)
-d_insee=chargement_fichier("csv/code-insee.csv", 0)
-dico_support=chargement_fichier("csv/SUP_SUPPORT.txt", 1)
-d_support=mix_support_insee(d_insee,dico_support)
-d_nature=chargement_fichier("csv/SUP_NATURE.txt", 0)
-d_proprietaire =chargement_fichier("csv/SUP_PROPRIETAIRE.txt", 0)
+liste_supports = liste_supports_systeme(dictionnaire, techno)
 
-############# Intersection GSMR / STATION et GSMR / SUPPORT ####################
-keys_station_unique = set(liste_unique).intersection(set(d_station.keys()))
-d_station_unique = {k:d_station[k] for k in keys_station_unique}
-keys_support_unique = set(liste_unique).intersection(set(d_support.keys()))
-d_support_unique = {k:d_support[k] for k in keys_support_unique}
-
-########################### MISE EN FORME ######################################
+### CREATION DE LA CARTE ###
 map_osm = folium.Map(location=[48.8589, 2.3469], zoom_start=12,
                    tiles='Stamen Toner')
 if results.cluster: # Si option -c PARSER
     marker_cluster = folium.MarkerCluster().add_to(map_osm)
 else:
     marker_cluster = map_osm
-for key, data in d_support_unique.items():
-    l_coord_dms_LAT = float(data[3]), float(data[4]), float(data[5]), data[6]
-    l_coord_dms_LON = float(data[7]), float(data[8]), float(data[9]), data[10]
-    datastation = d_station_unique.get(key)
-    datemes = str(datastation[5])
-    dateimplan = str(datastation[3])
-    datanature = d_nature.get(data[2])
-    nature = str(datanature[1])
-    latnature = nature.decode('latin-1')
-    if data[12] :
-        proprio = d_proprietaire.get(data[12])
-        latproprio = proprio[1].decode('latin-1')
-    else :
-        latproprio = ""
-    html="Station : " + key + "<br>" + data[19] + " ("+data[20] + ")" \
-    + "<br>Implantation : " + dateimplan + "<br>En service : " + datemes \
-    + "<br>Antennes : " + str(liste_emetteur.count(key)) \
-    + "<br>Support : " + data[0] + "<br>" + latnature \
-    + " (" + str(data[11]) + "m)<br>" +  latproprio
-    iframe = folium.IFrame(html=html, width=275, height=175)
-    popup = folium.Popup(iframe, max_width=2650)
-    folium.Marker([conversion(l_coord_dms_LAT), conversion(l_coord_dms_LON)],\
-    popup=popup).add_to(marker_cluster)
-
-map_osm.save("dataradioMap_"+techno+".html")
+affichage_support(liste_supports, 'red')
+map_osm.save("dataradio-map.html")
