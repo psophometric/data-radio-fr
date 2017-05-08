@@ -181,9 +181,8 @@ def sauvegarde_fichier(dossier, nom_fichier, fichier):
         print "Création du dossier {0}".format(dossier)
         os.mkdir(dir_path+dir_json)
     print "Sauvegarde du fichier {0}".format(nom_fichier)
-    f = open(dossier[1:] + nom_fichier, 'w')
-    print >> f, fichier
-    f.close()
+    with open(dossier[1:] + nom_fichier, 'w') as f:
+        f.write(fichier)
     return True
 
 def mise_en_json(dictionnaire):
