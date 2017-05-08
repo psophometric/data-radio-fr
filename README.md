@@ -1,14 +1,12 @@
 # data-radio-fr
 
 ## Description
-Trois programmes [Python](https://www.python.org/) qui permettent de travailler avec le jeu de données de l'Anfr [Les installations radioélectriques de plus de 5 watts](https://www.data.gouv.fr/fr/datasets/donnees-sur-les-installations-radioelectriques-de-plus-de-5-watts-1/)
+Programmes [Python](https://www.python.org/) qui permettent de travailler avec le jeu de données de l'Anfr [Les installations radioélectriques de plus de 5 watts](https://www.data.gouv.fr/fr/datasets/donnees-sur-les-installations-radioelectriques-de-plus-de-5-watts-1/)
 
 - **dataradio-up**
-Equivalent à un update/upgrade sur le jeu de données.
-- **dataradio-tri**
-Recherche d'incohérences des données sur les dates (format et écarts Implatantion/EnService) et sur les hauteurs de support / altitudes d'antennes.
+Télécharge, met en forme et sauvegarde le jeu de données au format JSON.
 - **dataradio-map**
-Produit un fichier *html* permettant l'affichage sur une carte OpenStreetMap des émetteurs d'une technologie.
+Produit un fichier *html* permettant l'affichage sur une carte OpenStreetMap des émetteurs d'une technologie radio.
 
 ## Dépendance
 - [Folium](https://github.com/python-visualization/folium)
@@ -33,10 +31,7 @@ python dataradio-up.py
 [Voir le Readme dédié](https://github.com/psophometric/data-radio-fr/blob/master/README-win10.md)
 
 ## Usage
-`python dataradio-up.py`
-Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
-`python dataradio-tri.py -d 500` Affiche les stations ayant une date EnService antérieure de 500 jours à la date d'Implantation. *Affiche également si des données sont manquantes ou avec des erreurs de mise en forme*<br>
-`python dataradio-tri.py -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<p>
+`python dataradio-up.py` Télécharge, met en forme et sauvegarde le jeu de données au format JSON. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
 `python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
 `python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <p>
 > La carte se trouve dans le répertoire /home/Nom_Utilisateur/data-radio-fr/ au format html à ouvrir dans un naviateur web <p>
