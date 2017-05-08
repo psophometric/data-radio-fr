@@ -40,11 +40,7 @@ Lancez l'invité de commandes (Clic-droit sur le "Bouton Démarrer" > Invite de 
 Se rendre dans le répertoire du programme :<br>
 `cd data-radio-fr`<br>
 Puis :<br>
-`python dataradio-up.py`
-Vérifie que la version du jeu de données dans le répertoire est bien à jour. Si nécessaire : télécharge et décompresse le jeu de données. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
-`python dataradio-tri.py -d 500` Affiche les stations ayant une date EnService antérieure de 500 jours à la date d'Implantation. *Affiche également si des données sont manquantes ou avec des erreurs de mise en forme*<br>
-`python dataradio-tri.py -a` Affiche les antennes ayant une altitude supérieure à la hauteur du support. *Affiche également si des données sont manquantes*<p>
-> Il y a actuellement un problème d'affichage des caractères accentués sous Windows 10.<br>
+`python dataradio-up.py`Télécharge, met en forme et sauvegarde le jeu de données au format JSON. **A exécuter en premier, après l'installation pour initialiser les bases.**<p>
 
 `python dataradio-map.py GSMR` Produit un fichier html, affichant les émetteurs GSMR sur une carte OpenStreetMap. <br>
 `python dataradio-map.py GSMR -c` Idem, mais avec l'option d'affichage *cluster* activée. <p>
