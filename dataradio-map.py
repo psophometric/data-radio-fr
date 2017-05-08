@@ -55,19 +55,6 @@ class Antenne(object):
         self.dimension, self.rayon = antenne['dimension'], antenne['rayon']
         self.azimut, self.altitude = antenne['azimut'], antenne['altitude']
         self.stations = []
-    def get_exploitants(self):
-        liste = []
-        for station in antenne.stations:
-            liste.append(station.exploitant_id)
-        return set(liste)
-    def get_systeme(self):
-        liste = []
-        for station in antenne.stations:
-            for emetteur in station.emetteurs:
-                for sys in emetteur.systeme:
-                    liste.append(sys)
-        return set(liste)
-
 
 class Station(object):
     def __init__(self, station):
